@@ -1,6 +1,6 @@
 <template>
   <header>
-    <img alt="logo" src="@/assets/logo.jpg" />
+    <img alt="logo" src="@/common/assets/logo.jpg" />
     <user-info></user-info>
   </header>
 </template>

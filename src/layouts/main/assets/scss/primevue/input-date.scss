@@ -1,0 +1,335 @@
+.p-datepicker {
+  padding: 0.5rem;
+  background: #ffffff;
+  color: rgba(0, 0, 0, 0.87);
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+
+  button {
+    color: $color-gray-5;
+  }
+
+  &:not(.p-datepicker-inline) {
+    background: #ffffff;
+    border: 0 none;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    .p-datepicker-header {
+      background: #ffffff;
+    }
+  }
+
+  .p-datepicker-header {
+    padding: 0.5rem;
+    color: rgba(0, 0, 0, 0.87);
+    background: #ffffff;
+    font-weight: 500;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+
+    .p-datepicker-prev {
+      width: 2rem;
+      height: 2rem;
+      color: rgba(0, 0, 0, 0.6);
+      border: 0 none;
+      background: transparent;
+      border-radius: 50%;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+
+      &:enabled {
+        &:hover {
+          color: rgba(0, 0, 0, 0.6);
+          border-color: transparent;
+          background: rgba(0, 0, 0, 0.04);
+        }
+      }
+
+      &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: none;
+      }
+    }
+
+    .p-datepicker-next {
+      width: 2rem;
+      height: 2rem;
+      color: rgba(0, 0, 0, 0.6);
+      border: 0 none;
+      background: transparent;
+      border-radius: 50%;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+
+      &:enabled {
+        &:hover {
+          color: rgba(0, 0, 0, 0.6);
+          border-color: transparent;
+          background: rgba(0, 0, 0, 0.04);
+        }
+      }
+
+      &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: none;
+      }
+    }
+
+    .p-datepicker-title {
+      line-height: 2rem;
+      display: flex;
+
+      select {
+        transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
+
+        &:focus {
+          outline: 0 none;
+          outline-offset: 0;
+          box-shadow: none;
+          border-color: #3F51B5;
+        }
+      }
+
+      .p-datepicker-month {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  table {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+
+    th {
+      padding: 0.5rem;
+      text-align: center;
+
+      >span {
+        width: 2.25rem;
+        height: 2.25rem;
+      }
+    }
+
+    td {
+
+      >span {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        transition: none;
+        border: 1px solid transparent;
+
+        &:focus {
+          outline: 0 none;
+          outline-offset: 0;
+          box-shadow: none;
+        }
+      }
+
+      >span.p-highlight {
+        color: #3F51B5;
+        background: rgba(63, 81, 181, 0.12);
+      }
+    }
+
+    td.p-datepicker-today {
+      >span {
+        background: #ffffff;
+        color: rgba(0, 0, 0, 0.87);
+        border-color: #b5b5b5;
+      }
+
+      >span.p-highlight {
+        color: #3F51B5;
+        background: rgba(63, 81, 181, 0.12);
+      }
+    }
+  }
+
+  .p-datepicker-buttonbar {
+    padding: 0.75rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+    .p-button {
+      width: auto;
+    }
+  }
+
+  .p-timepicker {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0.5rem;
+
+    button {
+      width: 2rem;
+      height: 2rem;
+      color: rgba(0, 0, 0, 0.6);
+      border: 0 none;
+      background: transparent;
+      border-radius: 50%;
+      transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+
+      &:enabled {
+        &:hover {
+          color: rgba(0, 0, 0, 0.6);
+          border-color: transparent;
+          background: rgba(0, 0, 0, 0.04);
+        }
+      }
+
+      &:focus {
+        outline: 0 none;
+        outline-offset: 0;
+        box-shadow: none;
+      }
+
+      &:last-child {
+        margin-top: 0.2em;
+      }
+    }
+
+    span {
+      font-size: 1.25rem;
+    }
+
+    >div {
+      padding: 0 0.5rem;
+    }
+  }
+
+  .p-monthpicker {
+    margin: 0.5rem 0;
+
+    .p-monthpicker-month {
+      padding: 0.5rem;
+      transition: none;
+      border-radius: 4px;
+    }
+
+    .p-monthpicker-month.p-highlight {
+      color: #3F51B5;
+      background: rgba(63, 81, 181, 0.12);
+    }
+  }
+
+  &:not(.p-disabled) {
+    table {
+      td {
+        span {
+          &:not(.p-highlight) {
+            &:not(.p-disabled) {
+              &:hover {
+                background: rgba(0, 0, 0, 0.04);
+              }
+
+              &:focus {
+                outline: 0 none;
+                outline-offset: 0;
+                box-shadow: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .p-monthpicker {
+      .p-monthpicker-month {
+        &:not(.p-highlight) {
+          &:not(.p-disabled) {
+            &:hover {
+              background: rgba(0, 0, 0, 0.04);
+            }
+
+            &:focus {
+              outline: 0 none;
+              outline-offset: 0;
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.p-datepicker.p-datepicker-timeonly {
+  .p-timepicker {
+    border-top: 0 none;
+  }
+}
+
+.p-datepicker.p-datepicker-multiple-month {
+  .p-datepicker-group {
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+      border-right: 0 none;
+    }
+  }
+}
+
+.p-calendar {
+  width: 100%;
+
+  input {
+    border-right: none;
+  }
+
+  .p-datepicker-trigger {
+    border: 1px solid;
+    border-color: #00000061;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left: none;
+    background-color: $form-control-background;
+    width: 45px;
+    margin: 0;
+
+    span {
+      color: $color-gray-5;
+    }
+  }
+
+  &.p-inputwrapper-focus {
+    .p-datepicker-trigger {
+      border-color: #043458;
+      box-shadow: 0 3px 10px 0 rgb(34 41 47 / 10%);
+    }
+  }
+}
+
+.input-date-container {
+  &.invalid {
+    .p-calendar {
+      .p-datepicker-trigger {
+        border-color: $color-danger;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 769px) {
+  .p-datepicker {
+    table {
+      th {
+        padding: 0;
+      }
+
+      td {
+        padding: 0;
+      }
+    }
+  }
+}

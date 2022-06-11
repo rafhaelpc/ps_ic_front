@@ -1,72 +1,57 @@
 <template>
   <section class="data-table">
-    <!-- <pv-data-table
-      v-if="collection.length > 0"
-      :value="collection"
-      :scrollable="true"
-      :paginator="true"
-      :rows="10"
-      stripedRows
-    >
-      <pv-column
-        v-for="column in columns"
-        :key="column.field"
-        :field="column.field"
-        :header="column.title"
-        :sortable="true"
-      ></pv-column>
-    </pv-data-table> -->
+    <loader-container :loading="isLoading">
+      <filter-info :info="filterInfo" />
 
-    <slot v-if="collection.length > 0">
-      <base-table :columns="columns"
-                  :collection="collection"
-                  :list="this"
-                  :store-name="storeName"
-                  @edit="editRecord"
-                  @delete="deleteRecord"
-      >
-        <template v-for="column in columnSlots" #[column]="props">
-          <slot :name="column" :record="props.record" />
-        </template>
+      <slot v-if="collection.length > 0">
+        <base-table :columns="columns"
+                    :collection="collection"
+                    :list="this"
+                    :store-name="storeName"
+        >
+          <template v-for="column in columnSlots" #[column]="props">
+            <slot :name="column" :record="props.record" />
+          </template>
 
-        <template v-if="hasActionsSlot" #actions="props">
-          <slot name="actions" :record="props.record" />
-        </template>
-      </base-table>
-    </slot>
+          <template v-if="hasActionsSlot" #actions="props">
+            <slot name="actions" :record="props.record" />
+          </template>
+        </base-table>
+      </slot>
 
-    <div v-else class="data-table-empty">
-      <img
-        class="no-content-image"
-        src="@/assets/no-content.png"
-        alt="No content"
-      />
+      <div v-else class="data-table-empty">
+        <img
+          class="no-content-image"
+          src="@/common/assets/no-content.png"
+          alt="No content"
+        />
 
-      <h3 class="no-content-message">Nenhum registro encontrado!</h3>
+        <h3 class="no-content-message">Nenhum registro encontrado!</h3>
 
-      <p class="no-content-question">O que deseja fazer?</p>
+        <slot name="empty"></slot>
+      </div>
 
-      <button class="btn btn-primary" id="1">
-        <material-icon>add</material-icon>Cadastrar novo registro
-      </button>
-
-      <button class="btn btn-secondary">
-        <material-icon>upload</material-icon>Importar arquivo .csv
-      </button>
-    </div>
+      <div v-if="showPagination" class="pagination">
+        <custom-paginator ref="paginator"
+                          :rows="meta.itemsPerPage"
+                          :total-records="meta.totalItems"
+                          @page="onPageChange"
+        />
+      </div>
+    </loader-container>
   </section>
 </template>
 
 <script>
 import BaseTable from './BaseTable.vue';
-import MaterialIcon from '../MaterialIcon.vue';
+import FilterInfo from './FilterInfo.vue';
 
 export default {
   name: 'DataTable',
 
   components: {
-    MaterialIcon,
-    BaseTable
+    BaseTable,
+    FilterInfo
   },
 
   props: {
@@ -78,12 +63,33 @@ export default {
     columns: {
       type: Array,
       required: true
+    },
+
+    service: {
+      type: Object,
+      default: null
+    },
+
+    storeName: {
+      type: String,
+      default: null
+    },
+
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
 
   data() {
     return {
-      collection: []
+      selfLoading: false,
+      collection: [],
+      filterInfo: [],
+      meta: {
+        totalItems: null,
+        rows: null
+      }
     };
   },
 
@@ -103,19 +109,114 @@ export default {
 
     hasActionsSlot() {
       return !!this.$slots.actions;
+    },
+
+    isLoading() {
+      return this.loading || this.selfLoading;
+    },
+
+    /**
+     *
+     */
+    showPagination() {
+      return !!this.meta && this.collection.length > 0;
     }
+  },
+
+  mounted() {
+    this.getCollection();
   },
 
   methods: {
     /**
      *
      */
-    editRecord(record) {
+    async getCollection(options = {}) {
+      this.selfLoading = true;
 
+      if (!options.page) {
+        this.resetPage();
+      }
+
+      if (this.storeName) {
+        options.storeName = this.storeName;
+      }
+
+      try {
+        let response = {};
+
+        if (this.$parent.getCollection) {
+          response = await this.$parent.getCollection(options);
+        } else {
+          response = await this.service.getCollection(options);
+        }
+
+        this.meta = response.meta;
+        this.$emit('load', response);
+        this.$emit('update:modelValue', response.content || []);
+      } finally {
+        this.selfLoading = false;
+        await this.updateFilterInfo();
+      }
     },
 
-    deleteRecord(record) {
+    onPageChange(event) {
+      this.getCollection({
+        page: event.page + 1
+      });
+    },
 
+    /**
+     *
+     */
+    resetPage() {
+      if (this.$refs.paginator) {
+        this.$refs.paginator.resetPage();
+      }
+    },
+
+    /**
+     *
+     */
+    async updateFilterInfo() {
+      await this.$nextTick();
+
+      this.filterInfo = [];
+      const filterOptions = this.service.getFromStore('filterOptions', this.storeName);
+
+      if (!filterOptions) {
+        return;
+      }
+
+      Object.entries(filterOptions).forEach(([key, value]) => {
+        const columnName = this.columns.find(i => {
+          const filterFields = Array.isArray(i.filterField) ? i.filterField : [i.filterField];
+          return i.field === key || filterFields.includes(key);
+        })?.title;
+
+        if (columnName && value) {
+          this.filterInfo.push({
+            title: columnName,
+            value
+          });
+        }
+      });
+    },
+
+    /**
+     *
+     */
+    async sortCollection(field, type) {
+      const sort = { field, type };
+
+      await this.getCollection({ sort });
+    },
+
+    /**
+     *
+     */
+    async filterCollection(filter) {
+      await this.getCollection({ filter });
     }
   }
 };

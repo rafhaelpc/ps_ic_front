@@ -40,7 +40,10 @@ a.btn {
 
   &.btn-secondary {
     background-color: $color-secondary;
+  }
 
+  &.btn-success {
+    background-color: $color-success;
   }
 
   &.btn-warning {
@@ -60,6 +63,7 @@ a.btn {
     background-color: transparent;
     padding: 0;
     font-size: 12px;
+    color: $color-gray-5;
 
     .icon {
       font-size: 12px;

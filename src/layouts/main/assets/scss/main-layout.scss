@@ -11,7 +11,7 @@ body {
 }
 
 @import 'variables.scss';
-@import "primeicons/primeicons.css";
+@import 'mixins.scss';
 @import 'primevue/index.scss';
 @import 'bootstrap.scss';
 @import 'header.scss';
@@ -20,10 +20,21 @@ body {
 @import 'buttons.scss';
 @import 'data-table.scss';
 @import 'filter.scss';
+@import 'loader-container.scss';
+@import 'form.scss';
+@import 'text-section.scss';
 
 .layout-container {
   display: flex;
   justify-content: center;
   width: 100%;
   padding: 16px 5%;
+}
+
+a {
+  color: $color-primary;
+
+  &:hover {
+    opacity: .8;
+  }
 }

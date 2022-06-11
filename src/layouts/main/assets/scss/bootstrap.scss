@@ -11,3 +11,7 @@
 // 4. Include any optional Bootstrap CSS as needed
 @import "../../../../../node_modules/bootstrap/scss/grid";
 @import "../../../../../node_modules/bootstrap/scss/tables";
+
+.row {
+  margin-bottom: 8px;
+}

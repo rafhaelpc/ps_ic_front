@@ -1,0 +1,37 @@
+.text-section {
+  border-bottom: 1px solid #e9ebef;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin: 16px 0;
+
+  .text-section-container {
+    display: flex;
+    margin-bottom: -1px;
+
+    strong {
+      color: $color-primary;
+    }
+
+    .text-section-content {
+      cursor: default;
+      padding-right: 10px;
+      padding-bottom: 4px;
+      border-bottom: 4px solid $color-primary;
+      color: $color-gray-5;
+      text-decoration: none solid rgb(70, 79, 92);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+  }
+}
+
+.row {
+  .text-section {
+    width: calc(100% - 30px) !important;
+    margin-left: 15px;
+  }
+}

@@ -1,18 +1,15 @@
 <template>
+  <custom-toast />
+  <application-modal />
   <main-layout></main-layout>
-
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/> -->
 </template>
 
 <script>
 import MainLayout from '@/layouts/main';
+import ApplicationModal from './common/components/basic/ApplicationModal.vue';
 
 export default {
-  components: { MainLayout },
+  components: { MainLayout, ApplicationModal },
   name: 'App'
 };
 </script>

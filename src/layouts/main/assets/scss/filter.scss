@@ -10,3 +10,35 @@
     padding-top: 8px;
   }
 }
+
+.filter-info-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  margin: 8px;
+
+  .container-title {
+    margin: 0;
+    margin-right: 5px;
+  }
+
+  .filter-info-item {
+    border: 1px solid #00000017;
+    box-shadow: 0px 1px 5px -4px black;
+    padding: 3px 12px;
+    margin: 0 5px;
+    border-radius: 7px;
+    background-color: #f3f2f7;
+
+    .info-title {
+      margin: 0;
+      font-size: 11px;
+      line-height: 14px;
+    }
+
+    .info-value {
+      margin: 0;
+      line-height: 30px;
+    }
+  }
+}

@@ -1,9 +1,12 @@
 <template>
   <div class="page-header">
     <div>
-      <h2 class="page-title">{{ title }}</h2>
+      <div class="title-section">
+        <h2 class="page-title">{{ title }}</h2>
+        <small v-if="subtitle" class="page-subtitle">{{ subtitle }}</small>
+      </div>
 
-      <button class="btn btn-link" v-if="showBackOption">
+      <button class="btn btn-link" v-if="showBackOption" @click="handleBackNavigation">
         <span class="icon material-symbols-outlined"> arrow_back_ios </span>
         Voltar
       </button>
@@ -25,9 +28,20 @@ export default {
       required: true
     },
 
+    subtitle: {
+      type: String,
+      default: null
+    },
+
     showBackOption: {
       type: Boolean,
       default: false
+    }
+  },
+
+  methods: {
+    handleBackNavigation() {
+      this.$router.go(-1);
     }
   }
 };

@@ -68,13 +68,10 @@ export default {
     },
 
     storeName: {
-      type: String,
       default: null
     }
 
   },
-
-  emits: ['edit', 'delete'],
 
   data() {
     return {
@@ -143,20 +140,6 @@ export default {
      */
     checkIfHasSlot(name) {
       return Boolean(this.$slots?.[name]);
-    },
-
-    /**
-     *
-     */
-    editRecord(record) {
-      this.$emit('edit', record);
-    },
-
-    /**
-     *
-     */
-    async deleteRecord(record) {
-      this.$emit('delete', record);
     },
 
     /**

@@ -48,4 +48,8 @@ export default class StringHelper {
 
     return format(parseISO(value), 'dd/MM/yyyy');
   }
+
+  static formatCNPJ(value) {
+    return value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+  }
 }

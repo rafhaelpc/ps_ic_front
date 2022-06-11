@@ -13,9 +13,29 @@
     align-items: center;
     flex-wrap: wrap;
 
-    .page-title {
-      color: $color-primary;
+    .title-section {
+      display: flex;
+      align-items: flex-end;
+
+      .page-title {
+        color: $color-primary;
+      }
+
+      .page-subtitle {
+        margin-bottom: 4px;
+        font-size: 12px;
+        border-radius: 4px;
+        padding: 2px;
+        user-select: none;
+
+        &:before {
+          content: '>';
+          padding: 0 4px;
+        }
+      }
     }
+
+
 
     .page-actions {
       display: flex;

@@ -1,23 +1,36 @@
 <template>
   <page-header title="Lista de operadoras ANS">
     <template #actions>
-      <filter-button :component="filterComponent"></filter-button>
+      <filter-button :component="filterComponent" :store-name="service.storeName" @filter="handleFilter"></filter-button>
 
-      <router-link :to="{ name: 'about' }" class="btn btn-primary">
+      <router-link :to="{ name: 'operadora-ans.create' }" class="btn btn-primary">
         <material-icon>add</material-icon>Novo registro
       </router-link>
     </template>
   </page-header>
 
   <page-content>
-    <data-table v-model="collection" :columns="columns">
-      <template #actions>
-        <button class="btn btn-warning btn-icon">
+    <data-table ref="table"
+                v-model="collection"
+                :columns="columns"
+                :service="service"
+                :loading="loading"
+                :store-name="service.storeName">
+      <template #actions="{record} ">
+        <button class="btn btn-warning btn-icon" v-tooltip.bottom="'Editar'" @click="editRecord(record)">
           <material-icon>edit</material-icon>
         </button>
 
-        <button class="btn btn-danger btn-icon">
+        <button class="btn btn-danger btn-icon" v-tooltip.bottom="'Excluir'" @click="deleteRecord(record)">
           <material-icon>delete</material-icon>
+        </button>
+      </template>
+
+      <template #empty>
+        <p class="no-content-question">O que deseja fazer?</p>
+
+        <button class="btn btn-primary" @click="goToCreatePage">
+          <material-icon>add</material-icon>Cadastrar novo registro
         </button>
       </template>
     </data-table>
@@ -25,67 +38,47 @@
 </template>
 
 <script>
-import PageHeader from '@/common/components/PageHeader.vue';
-import MaterialIcon from '@/common/components/MaterialIcon.vue';
+import PageHeader from '@/common/components/basic/PageHeader.vue';
 import PageContent from '@/common/components/PageContent.vue';
-import DataTable from '@/common/components/dataTable/DataTable.vue';
 import FilterButton from '@/common/components/FilterButton.vue';
+
+import OperadoraAnsService from '../services/OperadoraAnsService';
 
 import OperadoraAnsFilter from './OperadoraAnsFilter.vue';
 import { markRaw } from 'vue';
+import { ModalService } from '@/core/services/messages';
 
 export default {
   components: {
     PageHeader,
-    MaterialIcon,
     PageContent,
-    DataTable,
     FilterButton
   },
   name: 'OperadoraAnsList',
 
   data() {
     return {
+      service: new OperadoraAnsService(),
       filterComponent: markRaw(OperadoraAnsFilter),
-      collection: [
-        {
-          registroAns: '418374',
-          cnpj: '11828089000103',
-          razaoSocial: 'CAIXA DE ASSISTÊNCIA DO SETOR DE ENERGIA -EVIDA -ASSISTÊNCIA À SAÚDE',
-          nomeFantasia: 'E-VIDA',
-          modalidade: 'Autogestão',
-          logradouro: 'SETOR DE HABITAÇÕES COLETIVAS GEMINADAS',
-          nrLogradouro: 'QUADRA 704/705',
-          complemento: 'BLOCO C, LOJA 48',
-          bairro: 'ASA NORTE',
-          cidade: 'Brasília',
-          uf: 'DF',
-          cep: '70730630',
-          ddd: 61,
-          telefone: '39668300',
-          fax: '39668302',
-          email: 'governanca@evida.org.br',
-          representante: 'ELI PINTO DE MELO JUNIOR',
-          cargoRepresentante: 'PRESIDENTE',
-          dataRegistroAns: '12/01/2012'
-        }
-      ],
+      loading: false,
+      collection: [],
 
       columns: [
         {
-          field: 'registroAns',
+          field: 'registroans',
           title: 'Registro ANS'
         },
         {
           field: 'cnpj',
-          title: 'CNPJ'
+          title: 'CNPJ',
+          format: 'CNPJ'
         },
         {
-          field: 'razaoSocial',
+          field: 'razaosocial',
           title: 'Razão Social'
         },
         {
-          field: 'nomeFantasia',
+          field: 'nomefantasia',
           title: 'Nome Fantasia'
         },
         {
@@ -97,7 +90,7 @@ export default {
           title: 'Logradouro'
         },
         {
-          field: 'nrLogradouro',
+          field: 'nr_logradouro',
           title: 'Nº'
         },
         {
@@ -141,15 +134,52 @@ export default {
           title: 'Representante'
         },
         {
-          field: 'cargoRepresentante',
+          field: 'cargo_representante',
           title: 'Cargo Representante'
         },
         {
-          field: 'dataRegistroAns',
-          title: 'Data de registro ANS'
+          field: 'data_registro',
+          title: 'Data de registro ANS',
+          format: 'date'
         }
       ]
     };
+  },
+
+  methods: {
+    goToCreatePage() {
+      this.$router.push({ name: 'operadora-ans.create' });
+    },
+    /**
+     *
+     */
+    handleFilter(filter) {
+      this.$refs.table.filterCollection(filter);
+    },
+
+    /**
+     *
+     */
+    editRecord(record) {
+      this.$router.push({ name: 'operadora-ans.edit', params: { id: record.id } });
+    },
+
+    /**
+     *
+     */
+    async deleteRecord(record) {
+      const canDelete = await ModalService.confirmDelete();
+
+      if (canDelete) {
+        this.loading = true;
+        try {
+          await this.service.deleteRecord(record.id);
+          this.$refs.table.getCollection();
+        } finally {
+          this.loading = false;
+        }
+      }
+    }
   }
 };
 </script>

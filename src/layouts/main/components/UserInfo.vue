@@ -1,7 +1,7 @@
 <template>
   <div class="user-info">
     <span>Rafhael Carvalho</span>
-    <img src="@/assets/avatar.jpg" />
+    <img src="@/common/assets/avatar.jpg" />
   </div>
 </template>
 

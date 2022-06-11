@@ -36,15 +36,14 @@ export default {
      *
      */
     enableSort() {
-      const storeName = this.storeName || this.list?.model?.storeName;
-      return this.list && storeName && this.sortField && this.column.sort !== false;
+      return this.storeName && this.sortField && this.column.sort !== false;
     },
 
     /**
      *
      */
     sortOptions() {
-      return this.list.model.getFromStore('sortOptions', this.storeName);
+      return this.$store.getters[`${this.storeName}/sortOptions`];
     },
 
     /**
@@ -60,7 +59,7 @@ export default {
     list() {
       let parent = this.$parent;
 
-      while (parent && parent.$options.name !== 'BaseList') {
+      while (parent && parent.$options.name !== 'DataTable') {
         parent = parent.$parent;
       }
 
