@@ -1,0 +1,33 @@
+.page-container {
+  width: 100%;
+  height: auto;
+  min-height: 64px;
+  padding: 16px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .page-title {
+      color: $color-primary;
+    }
+
+    .page-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .page-content {
+    margin-top: 24px;
+  }
+
+
+}

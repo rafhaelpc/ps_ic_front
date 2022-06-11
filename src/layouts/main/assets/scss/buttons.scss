@@ -1,0 +1,72 @@
+button,
+a.btn {
+  outline: 0;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+  margin: 3px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #fff;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    box-shadow: inset 2px 2px 7px -4px #000;
+  }
+
+  &.small {
+    padding: 4px 8px;
+  }
+
+  &.btn-icon {
+    padding: 4px;
+    border-radius: 4px;
+
+    span {
+      font-size: 20px;
+    }
+  }
+
+  &.btn-primary {
+    background-color: $color-primary;
+  }
+
+  &.btn-secondary {
+    background-color: $color-secondary;
+
+  }
+
+  &.btn-warning {
+    background-color: $color-warning;
+  }
+
+  &.btn-danger {
+    background-color: $color-danger;
+  }
+
+  &.btn-light {
+    background-color: $color-gray-light;
+    color: $color-gray-5;
+  }
+
+  &.btn-link {
+    background-color: transparent;
+    padding: 0;
+    font-size: 12px;
+
+    .icon {
+      font-size: 12px;
+    }
+
+    &:active {
+      box-shadow: none;
+    }
+  }
+}

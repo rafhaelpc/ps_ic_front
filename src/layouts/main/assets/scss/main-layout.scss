@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Sora', sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #F1F1F1;
+}
+
+@import 'variables.scss';
+@import "primeicons/primeicons.css";
+@import 'primevue/index.scss';
+@import 'bootstrap.scss';
+@import 'header.scss';
+@import 'user-info.scss';
+@import 'page.scss';
+@import 'buttons.scss';
+@import 'data-table.scss';
+@import 'filter.scss';
+
+.layout-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 5%;
+}

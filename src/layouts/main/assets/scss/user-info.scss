@@ -1,0 +1,16 @@
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 14px;
+  color: $color-gray-5;
+  user-select: none;
+
+  img {
+    width: 35px;
+    height: 35px;
+    margin: 0 8px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+}
